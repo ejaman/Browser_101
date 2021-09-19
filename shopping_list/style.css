@@ -1,0 +1,74 @@
+@font-face {
+  font-family: "LAB디지털";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/LAB디지털.woff")
+    format("woff");
+}
+
+section {
+  background-color: #fafafa;
+  border-radius: 15px;
+  width: 450px;
+  height: 95%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  color: #212121;
+  transform: translate(-50%, -50%);
+  box-shadow: 8px 8px 10px;
+}
+.header {
+  text-align: center;
+  margin-top: 30px;
+  font-size: 20px;
+}
+p {
+  margin-left: 15px;
+  margin-right: 15px;
+  font-size: 17px;
+}
+.explain {
+  border-bottom: #212121 dotted;
+  border-top: #212121 dotted;
+  margin-top: 35px;
+  padding: 20px;
+}
+
+.container {
+  display: flex;
+  margin-left: 20px;
+  width: 400px;
+  height: 40%;
+  overflow: auto;
+  font-family: "LAB디지털";
+  font-size: 19px;
+  font-weight: bold;
+}
+
+.footer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: fixed;
+  bottom: 30px;
+  width: 100%;
+}
+
+input {
+  width: 340px;
+  height: 30px;
+  background-color: white;
+  border-color: white;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  font-size: 17px;
+}
+
+button {
+  background-color: #fafafa;
+  border: none;
+  height: 40px;
+  width: 40px;
+}
+.add-btn {
+  font-size: 40px;
+}
