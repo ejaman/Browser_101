@@ -26,10 +26,10 @@ header {
 }
 
 .ground {
+  position: relative;
   width: 100%;
   height: 100%;
   margin-top: 40px;
-  opacity: 0.4;
 }
 
 .start-btn {
@@ -50,6 +50,8 @@ header {
   border-radius: 30px;
   font-size: 32px;
   margin-top: 8px;
+  /* display: none;이면 tree에 아예 포함되지 않아서 모양이 이상해질 수 있음 */
+  visibility: hidden;
 }
 
 .score {
@@ -61,6 +63,7 @@ header {
   background-color: whitesmoke;
   border: 3px solid;
   border-radius: 50%;
+  visibility: hidden;
 }
 
 audio {
