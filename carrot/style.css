@@ -1,0 +1,30 @@
+body {
+  background-image: url(../carrot/img/background.png);
+  background-size: 100%;
+}
+
+header {
+  display: flex;
+  flex-direction: row;
+}
+.score {
+  padding: 10px;
+  margin: 10px;
+  position: absolute;
+  right: 47%;
+}
+.timer {
+  padding: 10px;
+  margin: 10px;
+}
+audio {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+}
+.ground {
+  position: absolute;
+  width: 1410px;
+  height: 390px;
+  top: 390px;
+}

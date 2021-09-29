@@ -1,6 +1,12 @@
 const items = document.querySelector('.items');
+const form =document.querySelector('.new_form');
 const input = document.querySelector('.input');
 const addbtn = document.querySelector('.add-btn');
+
+form.addEventListener('submit', event => {
+  event.preventDefault();
+  onAdd();
+});
 
 function onAdd() {
   // 1. 사용자가 입력한 텍스트를 받아옴
@@ -56,12 +62,20 @@ function createItem (text) {
   return itemRow;
 }
 
-addbtn.addEventListener('click', () => {
-  onAdd();
-})
+// addbtn.addEventListener('click', () => {
+//   onAdd();
+// })
 
-input.addEventListener('keypress',event => {
-  if(event.key === 'Enter') {
-    onAdd();
-  }
-});
+// input.addEventListener('keydown',event => {
+//   // if(event.key === 'a'){
+//   //   event.preventDefault(); // keydown a는 표기 ㄴㄴ, keyup 표기 됨
+//   // }
+
+//   // 한글 입력시 끝 글자가 따로 생성됨, 중간에 발생하는 키 다운을 방지 혹은 키 업 사용하면 이거 필요 ㄴㄴ
+//   if(event.isComposing){
+//     return;
+//   } 
+//   if(event.key === 'Enter') {
+//     onAdd();
+//   }
+// });

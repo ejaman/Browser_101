@@ -71,4 +71,6 @@ button {
 }
 .add-btn {
   font-size: 40px;
+  display: flex;
+  margin-left: 40%;
 }
