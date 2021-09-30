@@ -18,6 +18,12 @@ let started = false;
 let final_score = 0;
 let time = undefined;
 
+const CarrotSound = new Audio('./sound/carrot_pull.mp3');
+const alertSound = new Audio('./sound/alert.wav');
+const BackgroundSound = new Audio('./sound/bg.mp3');
+const BugSound = new Audio('./sound/bug_pull.mp3');
+const winSound = new Audio('./sound/game_win.mp3');
+
 ground.addEventListener('click', (event) => onFieldClick(event));
 startBtn.addEventListener('click', () => {
   if(started) {
@@ -38,16 +44,26 @@ function startGame(){
   showStopBtn();
   showTimerScore();
   startTimer();
+  playSound(BackgroundSound);
 }
 function stopGame(){
   started = false;
   stopTimer();
   hideStartBtn();
   showPopup('Replay?');
+  playSound(alertSound);
+  stopSound(BackgroundSound);
 }
 function finishGame(win){
   started = false;
   hideStartBtn();
+  if(win){
+    playSound(winSound);
+  }else{
+    playSound(BugSound);
+  }
+  stopTimer();
+  stopSound(BackgroundSound);
   showPopup(win? '🏅 you won!': 'you lost!💩');
 }
 
@@ -95,6 +111,7 @@ function stopTimer(){
 
 function game() {
   ground.innerHTML = '';
+  final_score = 0;
   Score.innerHTML = count_carrot;
   // 이미지를 생성한 뒤 ground에 추가
   createImg('carrot', count_carrot, 'img/carrot.png');
@@ -109,16 +126,24 @@ function onFieldClick(event){
   if(target.matches('.carrot')){
     target.remove();
     final_score++;
+    playSound(CarrotSound);
     updateScore();
     if( final_score === count_carrot){
       finishGame(true);
     }
   }else if(target.matches('.bug')){
-    stopTimer();
+    playSound(BugSound);
     finishGame(false);
   }
 }
 
+function playSound(sound){
+  sound.currentTime = 0;
+  sound.play();
+}
+function stopSound(sound){
+  sound.pause();
+}
 function updateScore(){
   Score.innerHTML = count_carrot - final_score;
 }
