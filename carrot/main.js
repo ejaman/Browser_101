@@ -70,7 +70,8 @@ function finishGame(win){
 function showStopBtn(){
   const icon = startBtn.querySelector('.fas');
   icon.classList.add('fa-stop');
-  icon.classList.remove('fa-play')
+  icon.classList.remove('fa-play');
+  startBtn.style.visibility = 'visible';
 }
 function showTimerScore(){
   Timer.style.visibility = 'visible';

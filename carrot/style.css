@@ -6,6 +6,7 @@ button {
 
 body {
   text-align: center;
+  background-color: black;
 }
 
 .game {
@@ -52,6 +53,8 @@ header {
   margin-top: 8px;
   /* display: none;이면 tree에 아예 포함되지 않아서 필드 사이즈에 영향을 줄 수 있음 */
   visibility: hidden;
+  user-select: none;
+  cursor: auto;
 }
 
 .score {
@@ -64,6 +67,8 @@ header {
   border: 3px solid;
   border-radius: 50%;
   visibility: hidden;
+  user-select: none;
+  cursor: auto;
 }
 
 audio {
@@ -99,4 +104,13 @@ audio {
   /* 메시지가 그 다음줄에 나오도록 */
   display: block;
   font-size: 38px;
+}
+
+.carrot,
+.bug {
+  transition: transform 100ms ease-in;
+}
+.carrot:hover,
+.bug:hover {
+  transform: scale(1.1);
 }
