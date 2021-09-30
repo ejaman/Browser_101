@@ -50,7 +50,7 @@ header {
   border-radius: 30px;
   font-size: 32px;
   margin-top: 8px;
-  /* display: none;이면 tree에 아예 포함되지 않아서 모양이 이상해질 수 있음 */
+  /* display: none;이면 tree에 아예 포함되지 않아서 필드 사이즈에 영향을 줄 수 있음 */
   visibility: hidden;
 }
 

@@ -5,159 +5,149 @@ const groundRect = ground.getBoundingClientRect();
 const carrot_size = 60;
 const count_carrot = 5;
 const count_bug = 5;
-const game_time = 5;
+const game_Duration = 5;
 
 const startBtn = document.querySelector('.start-btn');
-const timer = document.querySelector('.timer');
-const score = document.querySelector('.score');
-const popup = document.querySelector('.pop-up');
-const popupBtn = document.querySelector('.refresh');
-const popupMsg = document.querySelector('.msg');
+const Timer = document.querySelector('.timer');
+const Score = document.querySelector('.score');
+const Popup = document.querySelector('.pop-up');
+const PopupBtn = document.querySelector('.refresh');
+const PopupMsg = document.querySelector('.msg');
 
-// 게임의 상태를 기억하는 변수( 시작 여부, 최종 점수, 남은 시간)
 let started = false;
 let final_score = 0;
 let time = undefined;
 
-// img click!
 ground.addEventListener('click', (event) => onFieldClick(event));
-
-//시작 버튼 클릭! 
-startBtn.addEventListener('click',() => {
-  console.log('click');
-  if(started){
+startBtn.addEventListener('click', () => {
+  if(started) {
     stopGame();
-    showStopBtn();
   } else {
     startGame();
   }
-  started = !started;
-});
 
-popupBtn.addEventListener('click',()=>{
+});
+PopupBtn.addEventListener('click', ()=> {
   startGame();
   hidePopup();
-});
+})
 
 function startGame(){
   started = true;
-  Game();
+  game();
   showStopBtn();
   showTimerScore();
-  startGameTimer();
+  startTimer();
 }
 function stopGame(){
   started = false;
-  stopGameTimer();
-  hideBtn();
-  showPopUp('replay? 😂')
+  stopTimer();
+  hideStartBtn();
+  showPopup('Replay?');
 }
-function finish(win){
+function finishGame(win){
   started = false;
-  hideBtn();
-  showPopUp(win? 'you won🌈': 'you lost👻');
+  hideStartBtn();
+  showPopup(win? '🏅 you won!': 'you lost!💩');
 }
 
 function showStopBtn(){
-  const stop = startBtn.querySelector('.fas');
-  stop.classList.add('fa-stop');
-  stop.classList.remove('fa-play');
+  const icon = startBtn.querySelector('.fas');
+  icon.classList.add('fa-stop');
+  icon.classList.remove('fa-play')
+}
+function showTimerScore(){
+  Timer.style.visibility = 'visible';
+  Score.style.visibility = 'visible';
 }
 
-function hideBtn(){
+function hideStartBtn(){
   startBtn.style.visibility = 'hidden';
 }
-
-function showTimerScore(){
-  timer.style.visibility = 'visible';
-  score.style.visibility = 'visible';
-}
-function startGameTimer(){
-  let remainingTimeSec = game_time;
-  updateTimerText(remainingTimeSec);
-  time = setInterval(() => {
-    if(remainingTimeSec <= 0){
-      clearInterval(time);
-      finish(count_carrot === final_score);
-      return;
-    }
-    updateTimerText(--remainingTimeSec);
-  }, 1000);
-}
-function stopGameTimer(){
-  clearInterval(time);
-}
-function updateTimerText(sec){
-  const seconds = sec % 60;
-  timer.innerHTML = `${seconds}초`
-}
-
-function showPopUp(text){
-  popupMsg.innerHTML = text;
-  popup.classList.remove('pop-up--hide');
+function showPopup(text){
+  PopupMsg.innerHTML = text;
+  Popup.classList.remove('pop-up--hide')
 }
 function hidePopup(){
-  popup.classList.add('pop-up--hide');
+  Popup.classList.add('pop-up--hide')
 }
 
-function Game(){
+function startTimer(){
+  let remainingTime = game_Duration;
+  updateTimerText(remainingTime);
+  time = setInterval(() => {
+    if(remainingTime <= 0){
+      clearInterval(time);
+      finishGame(count_carrot === final_score);
+      return;
+    }
+    updateTimerText(--remainingTime);
+  }, 1000);
+}
+function updateTimerText(timer){
+  const sec = timer % 60;
+  Timer.innerHTML = `${sec} 초`
+}
+
+function stopTimer(){
+  clearInterval(time);
+}
+
+function game() {
   ground.innerHTML = '';
-  score.innerHTML = count_carrot;
-  //이미지를 생성하고 ground에 추가해줌
-  CreateImg('carrot',count_carrot,'img/carrot.png');
-  CreateImg('bug',count_bug,'img/bug.png');
+  Score.innerHTML = count_carrot;
+  // 이미지를 생성한 뒤 ground에 추가
+  createImg('carrot', count_carrot, 'img/carrot.png');
+  createImg('bug', count_bug, 'img/bug.png');
 }
 
 function onFieldClick(event){
-  if(!started){
+  if( !started){
     return;
   }
   const target = event.target;
   if(target.matches('.carrot')){
     target.remove();
     final_score++;
-    updateScoreBoard();
-    if(final_score === count_carrot){
-      finish(true);
+    updateScore();
+    if( final_score === count_carrot){
+      finishGame(true);
     }
   }else if(target.matches('.bug')){
-    stopGameTimer();
-    finish(false);
+    stopTimer();
+    finishGame(false);
   }
-};
-
-
-function updateScoreBoard(){
-  score.innerHTML = count_carrot-final_score;
 }
 
-function CreateImg( className, count, path){
+function updateScore(){
+  Score.innerHTML = count_carrot - final_score;
+}
+
+
+//여기서 position random으로 설정
+function createImg( className, count, path){
   const x1 = 0;
   const y1 = 0;
-  const x2 = groundRect.width - carrot_size;
-  const y2 = groundRect.height - carrot_size;
+  const x2 = groundRect.width  - carrot_size;
+  const y2 = groundRect.height  - carrot_size;
+  
   for(let i = 0; i < count; i++){
     const img = document.createElement('img');
     img.setAttribute('class', className);
     img.setAttribute('src', path);
-    img.style.position = 'absolute';
-
+    img. style.position = 'absolute';
+    
     const x = randomNum(x1, x2);
     const y = randomNum(y1, y2);
     img.style.left = `${x}px`;
     img.style.top = `${y}px`;
     ground.appendChild(img);
-    }
   }
-
-function randomNum(min, max){
-  // 단 max는 포함 x
-  return Math.random() * (max - min) + min;
 }
 
-
-  
-
+function randomNum(min, max){
+  return Math.random() * (max-min) +  min;
+}
 
 
 
