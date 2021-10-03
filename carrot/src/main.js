@@ -26,7 +26,7 @@ field.setClickListener(onItemClick);
 
 
 function onItemClick(item){
-  if( !started){
+  if(!started){
     return;
   }
   if(item === 'carrot'){
