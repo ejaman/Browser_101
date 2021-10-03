@@ -71,6 +71,7 @@ export default class Ground {
       this.onItemClick && this.onItemClick('carrot');
       // type 전달
     }else if(target.matches('.bug')){
+      sound.playBug();
       this.onItemClick && this.onItemClick('bug');
     }
   }
