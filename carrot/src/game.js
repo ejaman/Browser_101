@@ -1,7 +1,12 @@
 'use strict';
-
+import { Ground, ItemType } from "./ground.js";
 import * as sound from './sound.js';
-import Ground from "./ground.js";
+
+export const Reason = Object.freeze({
+  win: 'win',
+  lose: 'lose',
+  cancel: 'cancel'
+});
 
 //bulider pattern
 export class GameBuilder {
@@ -41,7 +46,7 @@ class Game{
     this.Score = document.querySelector('.score');
     this.startBtn.addEventListener('click', () => {
       if(this.started) {
-        this.stop();
+        this.stop(Reason.cancel);
       } else {
         this.start();
       }
@@ -69,40 +74,26 @@ class Game{
     this.startTimer();
     sound.playBackground();
   }
-  stop(){
+  stop(reason){
     this.started = false;
     this.stopTimer();
     this.hideStartBtn();
-    // this.gameFinishBanner.show('Replay?');
-    sound.playalert();
-    sound.stopBackground()
-    this.onGameStop && this.onGameStop('cancel'); 
-  }
-  finish(win){
-    this.started = false;
-    this.hideStartBtn();
-    if(win){
-      sound.playwin();
-    }else{
-      sound.playBug();
-    }
-    this.stopTimer();
     sound.stopBackground();
-    this.onGameStop && this.onGameStop(win? '🏅 you won!': 'you lost!💩');
+    this.onGameStop && this.onGameStop(reason); 
   }
 
   onItemClick = (item) =>{
     if(!this.started){
       return;
     }
-    if(item === 'carrot'){
+    if(item === ItemType.carrot){
       this.final_score++;
       this.updateScore();
       if( this.final_score === this.carrotCount){
-        this.finish(true);
+        this.stop(Reason.win);
       }
-    }else if(item === 'bug'){
-      this.finish(false);
+    }else if(item === ItemType.bug){
+      this.stop(Reason.lose);
     }
   }
 
@@ -128,7 +119,7 @@ startTimer(){
   this.time = setInterval(() => {
     if(remainingTime <= 0){
       clearInterval(this.time);
-      this.finish(this.carrotCount === this.final_score);
+      this.stop(this.carrotCount === this.final_score ? Reason.win: Reason.lose);
       return;
     }
     this.updateTimerText(--remainingTime);

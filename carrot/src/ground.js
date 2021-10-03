@@ -4,7 +4,12 @@ import * as sound from './sound.js';
 
 const carrot_size = 60;
 
-export default class Ground {
+export const ItemType = Object.freeze({
+  carrot: 'carrot',
+  bug: 'bug'
+});
+
+export class Ground {
   constructor(countCarrot, countBug){
     this.countCarrot = countCarrot;
     this.countBug = countBug;
@@ -68,11 +73,11 @@ export default class Ground {
     if(target.matches('.carrot')){
       target.remove();
       sound.playCarrot();
-      this.onItemClick && this.onItemClick('carrot');
+      this.onItemClick && this.onItemClick(ItemType.carrot);
       // type 전달
     }else if(target.matches('.bug')){
       sound.playBug();
-      this.onItemClick && this.onItemClick('bug');
+      this.onItemClick && this.onItemClick(ItemType.bug);
     }
   }
   
