@@ -1,8 +1,14 @@
 'use strict';
 import Popup from "./popup.js";
-import Game from "./game.js";
+import { GameBuilder } from "./game.js";
 
-const playgame = new Game(3,2,2);
+// 어떤 값을 설정하는지 한 눈에 알아보기 쉬움
+const playgame = new GameBuilder()
+.gameDuration(3)
+.carrotCount(2)
+.bugCount(2)
+.build();
+
 playgame.setGameStopListener((reason) => {
   console.log(reason);
 
