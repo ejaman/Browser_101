@@ -1,7 +1,6 @@
 <<<<<<< HEAD
 # Browser_101
 
-⚠️ 드림코딩의 브라우저 101 강의 중 쇼핑리스트와 당근 뽑기 게임을 만들고 강의를 바탕으로 수정했습니다.<br />
 ⚠️ Reference: Dream Coding Browser 101
 <br /><br />
 
